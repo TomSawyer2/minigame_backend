@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
-var apis = require('../controller/users.js');
+var apis = require('../controller/game2.js');
 
-/* /user下的请求匹配 */
+/* /api/v2下的请求匹配 */
 router.get('/', function (req, res, next) {
 	apis.test(req, res, next);
 });

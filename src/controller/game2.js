@@ -2,7 +2,7 @@
 
 const apis = {
     test(req, res) {
-        res.send({ status: 0, msg: '操作成功', data: null }); // 此处为正常返回请求示例
+        res.send({ status: 0, msg: 'Hello World For Game2', data: null }); // 此处为正常返回请求示例
     }
 }
 

@@ -4,8 +4,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./src/routes/index');
-var usersRouter = require('./src/routes/users');
+var game1Router = require('./src/routes/game1');
+var game2Router = require('./src/routes/game2');
 
 var app = express();
 
@@ -15,16 +15,19 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api', indexRouter);
-app.use('/api/users', usersRouter);
+app.use('/api/v1', game1Router);
+app.use('/api/v2', game2Router);
 
-// catch 404 and forward to error handler
 app.use(function (req, res, next) {
-	next(createError(404));
+	next(createError(404)); // 无匹配接口时的返回
 });
 
 app.use(function (err, req, res, next) {
-	res.send({ status: err.status, msg: err.msg, data: null })
+	res.send({ status: err.status, msg: err.msg, data: null }) // 代码中使用next抛出的错误拦截
+});
+
+app.use(function (err, req, res, next) {
+	res.send({ status: -1, msg: '未知错误', data: null }) // 最后的错误拦截
 });
 
 module.exports = app;
