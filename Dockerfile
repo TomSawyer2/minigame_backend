@@ -10,4 +10,4 @@ RUN npm install
 EXPOSE 3000
 
 # 运行命令
-CMD [ "pm2-docker", "start", "./bin/www" ]
+CMD [ "pm2-docker", "start", "pm2.json" ]
