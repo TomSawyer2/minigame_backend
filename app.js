@@ -15,6 +15,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+require("./src/db");
+
 app.use('/api/v1', game1Router);
 app.use('/api/v2', game2Router);
 
