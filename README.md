@@ -1,12 +1,18 @@
 # minigame_backend
 
 ## 基本信息
-项目名称：minigame_backend
-框架：Express
-语言：JS
+
+| 项目名称 | minigame_backend |
+| -------- | ---------------- |
+| 框架     | Express          |
+| 语言     | JS               |
+| 数据库   | MonogoDB         |
+
+
 
 ## 基本规范
-已经在ESLint和Prettier中进行了配置，Git相关操作中需要手动add与commit，会自动进行代码规范性的检查，不符合要求不能push，统一使用Tab4格缩进。
+
+Git相关操作需要手动add与commit，会自动进行代码规范性的检查，统一使用Tab4格缩进。
 
 ## 项目相关
 
@@ -14,6 +20,29 @@
 ```bash
 npm install
 husky install
+```
+
+在`/src`文件夹内创建文件`db.js`用于连接数据库，示例如下，注意将连接地址改为自己的就可以：
+
+```js
+//引入模块
+const mongoose = require('mongoose')
+
+//连接数据库
+mongoose.connect('mongodb://username:password@ip:port/minigame', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    autoIndex: true
+}, function (err) {
+    if (err) console.log(err);
+})
+
+const db = mongoose.connection;
+
+db.once('open', () => {
+    // 测试数据库连接是否成功
+    console.log('mongoose connect success')
+})
 ```
 
 ### 启动项目
