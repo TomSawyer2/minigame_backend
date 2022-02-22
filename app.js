@@ -3,11 +3,14 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var errorcode = require('./src/common/config.js').errorcode;
 
 var game1Router = require('./src/routes/game1');
 var game2Router = require('./src/routes/game2');
 
 var app = express();
+//引入插件
+var vertoken = require('./src/common/token')
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -16,6 +19,22 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 require("./src/db");
+
+//解析token获取用户信息
+app.use(function (req, res, next) {
+	var token = req.get('token');
+	if (token !== undefined) {
+		vertoken.getToken(token).then((data) => {
+			req.data = data;
+			return next();
+		}).catch((error) => {
+			console.log(error);
+			return next({ status: errorcode.TOKEN_EXPIRED, msg: 'token失效' });
+		})
+	} else {
+		next();
+	}
+});
 
 app.use('/api/v1', game1Router);
 app.use('/api/v2', game2Router);

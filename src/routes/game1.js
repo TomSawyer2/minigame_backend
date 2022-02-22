@@ -7,6 +7,10 @@ router.get('/', function (req, res, next) {
 	apis.test(req, res, next);
 });
 
+router.post('/login', function (req, res, next) {
+	apis.login(req, res, next);
+});
+
 router.post('/updateInfo', function (req, res, next) {
 	apis.updateInfo(req, res, next);
 });

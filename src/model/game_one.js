@@ -2,12 +2,16 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 const gameOneSchema = new Schema({
+    token: {
+        type: String
+    },
     username: {
-        required: true,
         type: String
     },
     phone: {
-        required: true,
+        type: String
+    },
+    studentId: {
         type: String
     },
     score: {
