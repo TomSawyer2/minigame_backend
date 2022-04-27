@@ -15,18 +15,19 @@ var vertoken = require('./src/common/token')
 const redis = require('ioredis');
 const redisConfig = {
 	port: 6379,
-	host: '172.17.0.12',
+	host: 'localhost',
 	password: '',
 	db: 0
 }
 const client = new redis(redisConfig);
 var limiter = require('express-limiter')(app, client);
 
+// 1个ip1s内只能请求20次
 limiter({
 	path: '*',
 	method: 'all',
 	lookup: ['connection.remoteAddress'],
-	total: 100,
+	total: 20,
 	expire: 1000,
 	onRateLimited: function (req, res, next) {
 		res.send({ msg: 'Rate limit exceeded', status: 429 });
